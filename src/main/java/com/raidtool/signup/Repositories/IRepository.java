@@ -1,8 +1,8 @@
-package com.raidtool.signup.DataAcces;
+package com.raidtool.signup.Repositories;
 
 import java.util.List;
 
-public interface IDataAccess<T> {
+public interface IRepository<T> {
 
     List<T> get();
 

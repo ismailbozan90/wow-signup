@@ -1,4 +1,4 @@
-package com.raidtool.signup.Service;
+package com.raidtool.signup.Services;
 
 import java.util.List;
 

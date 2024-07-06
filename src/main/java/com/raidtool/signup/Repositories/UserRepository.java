@@ -1,5 +1,6 @@
-package com.raidtool.signup.DataAcces;
+package com.raidtool.signup.Repositories;
 
+import com.raidtool.signup.Entities.User;
 import jakarta.persistence.EntityManager;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,44 +11,43 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class HibernateDataAccess<T> implements IDataAccess<T> {
+public class UserRepository implements IRepository<User> {
 
     private EntityManager entityManager;
-    private final Class<T> type;
 
     @Autowired
-    public HibernateDataAccess(EntityManager entityManager, @Autowired Class<T> type) {
+    public UserRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
-        this.type = type;
     }
 
     @Override
-    public List<T> get() {
+    public List<User> get() {
         Session session = entityManager.unwrap(Session.class);
-        return session.createQuery("from " + type.getName(), type).getResultList();
+        return session.createQuery("from User").getResultList();
     }
 
     @Override
-    public T getById(int id) {
+    public User getById(int id) {
         Session session = entityManager.unwrap(Session.class);
-        return session.get(this.type, id);
+        return session.get(User.class, id);
     }
 
     @Override
-    public void add(T t) {
+    public void add(User user) {
         Session session = entityManager.unwrap(Session.class);
-        session.saveOrUpdate(t);
+        session.saveOrUpdate(user);
     }
 
     @Override
-    public void update(T t) {
+    public void update(User user) {
         Session session = entityManager.unwrap(Session.class);
-        session.saveOrUpdate(t);
+        session.saveOrUpdate(user);
     }
 
     @Override
-    public void delete(T t) {
+    public void delete(User user) {
         Session session = entityManager.unwrap(Session.class);
-        session.delete(t);
+        User userToDelete = session.get(User.class, user.getId());
+        session.delete(userToDelete);
     }
 }

@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="characters")
-public class Characters {
+public class Character {
 
     @Id
     @Column(name="id")
@@ -22,14 +22,14 @@ public class Characters {
     private String className;
 
 
-    public Characters(int id, int userId, String characterName, String className) {
+    public Character(int id, int userId, String characterName, String className) {
         this.id = id;
         this.userId = userId;
         this.characterName = characterName;
         this.className = className;
     }
 
-    public Characters() {}
+    public Character() {}
 
     public int getId() {
         return id;

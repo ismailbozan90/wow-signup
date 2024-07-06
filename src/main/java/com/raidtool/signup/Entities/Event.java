@@ -2,13 +2,12 @@ package com.raidtool.signup.Entities;
 
 
 import jakarta.persistence.*;
-import jdk.jfr.Event;
 
 import java.util.Date;
 
 @Entity
 @Table(name="events")
-public class Events {
+public class Event {
 
     @Id
     @Column(name="id")
@@ -25,14 +24,14 @@ public class Events {
     private Date endDate;
 
 
-    public Events(int id, String title, String description, Date endDate) {
+    public Event(int id, String title, String description, Date endDate) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.endDate = endDate;
     }
 
-    public Events() {}
+    public Event() {}
 
     public int getId() {
         return id;

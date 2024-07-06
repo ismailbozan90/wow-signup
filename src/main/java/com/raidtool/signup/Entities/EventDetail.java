@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="eventdetails")
-public class EventDetails {
+public class EventDetail {
 
 
     @Id
@@ -23,14 +23,14 @@ public class EventDetails {
     private int status;
 
 
-    public EventDetails(int id, int eventId, String characterName, int status) {
+    public EventDetail(int id, int eventId, String characterName, int status) {
         this.id = id;
         this.eventId = eventId;
         this.characterName = characterName;
         this.status = status;
     }
 
-    public EventDetails() {}
+    public EventDetail() {}
 
     public int getId() {
         return id;
