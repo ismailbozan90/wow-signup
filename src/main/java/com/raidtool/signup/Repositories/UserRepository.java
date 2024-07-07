@@ -1,5 +1,7 @@
 package com.raidtool.signup.Repositories;
 
+import com.raidtool.signup.Entities.Character;
+import com.raidtool.signup.Entities.EventDetail;
 import com.raidtool.signup.Entities.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -60,5 +62,17 @@ public class UserRepository implements IRepository<User> {
         query.setParameter("password", user.getPassword());
         List<User> result = query.getResultList();
         return !result.isEmpty();
+    }
+
+    public List<Character> getCharacterList(User user) {
+        Session session = entityManager.unwrap(Session.class);
+        User findUser = session.get(User.class, user.getId());
+        return findUser.getCharacterList();
+    }
+
+    public List<EventDetail> getEventDetailList(User user) {
+        Session session = entityManager.unwrap(Session.class);
+        User findUser = session.get(User.class, user.getId());
+        return findUser.getEventDetailList();
     }
 }

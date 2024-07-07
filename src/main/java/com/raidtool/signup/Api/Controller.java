@@ -34,6 +34,16 @@ public class Controller {
         return userService.login(user);
     }
 
+    @PostMapping("usercharacters")
+    public List<Character> getUserCharacterList(@RequestBody User user) {
+        return userService.getCharacterList(user);
+    }
+
+    @PostMapping("usereventdetails")
+    public List<EventDetail> getUserEventDetailList(@RequestBody User user) {
+        return userService.getEventDetailList(user);
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // User methods

@@ -1,5 +1,7 @@
 package com.raidtool.signup.Services;
 
+import com.raidtool.signup.Entities.Character;
+import com.raidtool.signup.Entities.EventDetail;
 import com.raidtool.signup.Entities.User;
 import com.raidtool.signup.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +46,13 @@ public class UserService implements IService<User> {
 
     public boolean login(User user) {
         return userRepository.login(user);
+    }
+
+    public List<Character> getCharacterList(User user) {
+        return userRepository.getCharacterList(user);
+    }
+
+    public List<EventDetail> getEventDetailList(User user) {
+        return userRepository.getEventDetailList(user);
     }
 }
