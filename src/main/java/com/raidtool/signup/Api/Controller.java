@@ -5,10 +5,7 @@ import com.raidtool.signup.Entities.Character;
 import com.raidtool.signup.Entities.Event;
 import com.raidtool.signup.Entities.EventDetail;
 import com.raidtool.signup.Entities.User;
-import com.raidtool.signup.Services.CharacterService;
-import com.raidtool.signup.Services.EventDetailService;
-import com.raidtool.signup.Services.EventService;
-import com.raidtool.signup.Services.UserService;
+import com.raidtool.signup.Services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -29,6 +26,14 @@ public class Controller {
         this.eventService = eventService;
         this.eventDetailService = eventDetailService;
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @PostMapping("login")
+    public boolean login(@RequestBody User user) {
+        return userService.login(user);
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // User methods

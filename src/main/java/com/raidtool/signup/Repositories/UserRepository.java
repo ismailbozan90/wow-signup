@@ -2,6 +2,7 @@ package com.raidtool.signup.Repositories;
 
 import com.raidtool.signup.Entities.User;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -49,5 +50,15 @@ public class UserRepository implements IRepository<User> {
         Session session = entityManager.unwrap(Session.class);
         User userToDelete = session.get(User.class, user.getId());
         session.delete(userToDelete);
+    }
+
+    public boolean login(User user) {
+        Session session = entityManager.unwrap(Session.class);
+        String hql = "FROM User u WHERE u.username = :username AND u.password = :password";
+        Query query = session.createQuery(hql);
+        query.setParameter("username", user.getUsername());
+        query.setParameter("password", user.getPassword());
+        List<User> result = query.getResultList();
+        return !result.isEmpty();
     }
 }

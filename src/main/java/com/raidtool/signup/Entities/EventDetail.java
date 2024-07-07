@@ -22,12 +22,16 @@ public class EventDetail {
     @Column(name="status")
     private int status;
 
+    @Column(name="user_id")
+    private int userId;
 
-    public EventDetail(int id, int eventId, String characterName, int status) {
+
+    public EventDetail(int id, int eventId, String characterName, int status, int userId) {
         this.id = id;
         this.eventId = eventId;
         this.characterName = characterName;
         this.status = status;
+        this.userId = userId;
     }
 
     public EventDetail() {}
@@ -62,5 +66,13 @@ public class EventDetail {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int id) {
+        this.userId = id;
     }
 }

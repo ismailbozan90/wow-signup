@@ -41,4 +41,8 @@ public class UserService implements IService<User> {
     public void delete(User user) {
         userRepository.delete(user);
     }
+
+    public boolean login(User user) {
+        return userRepository.login(user);
+    }
 }
