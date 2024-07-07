@@ -48,11 +48,11 @@ public class UserService implements IService<User> {
         return userRepository.login(user);
     }
 
-    public List<Character> getCharacterList(User user) {
-        return userRepository.getCharacterList(user);
+    public List<Character> getCharacterList(int id) {
+        return userRepository.getCharacterList(id);
     }
 
-    public List<EventDetail> getEventDetailList(User user) {
-        return userRepository.getEventDetailList(user);
+    public List<EventDetail> getEventDetailList(int id) {
+        return userRepository.getEventDetailList(id);
     }
 }

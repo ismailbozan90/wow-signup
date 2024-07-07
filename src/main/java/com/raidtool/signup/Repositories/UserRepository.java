@@ -64,15 +64,15 @@ public class UserRepository implements IRepository<User> {
         return !result.isEmpty();
     }
 
-    public List<Character> getCharacterList(User user) {
+    public List<Character> getCharacterList(int id) {
         Session session = entityManager.unwrap(Session.class);
-        User findUser = session.get(User.class, user.getId());
+        User findUser = session.get(User.class, id);
         return findUser.getCharacterList();
     }
 
-    public List<EventDetail> getEventDetailList(User user) {
+    public List<EventDetail> getEventDetailList(int id) {
         Session session = entityManager.unwrap(Session.class);
-        User findUser = session.get(User.class, user.getId());
+        User findUser = session.get(User.class, id);
         return findUser.getEventDetailList();
     }
 }

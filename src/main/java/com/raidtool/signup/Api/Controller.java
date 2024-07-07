@@ -5,9 +5,13 @@ import com.raidtool.signup.Entities.Character;
 import com.raidtool.signup.Entities.Event;
 import com.raidtool.signup.Entities.EventDetail;
 import com.raidtool.signup.Entities.User;
-import com.raidtool.signup.Services.*;
+import com.raidtool.signup.Services.CharacterService;
+import com.raidtool.signup.Services.EventDetailService;
+import com.raidtool.signup.Services.EventService;
+import com.raidtool.signup.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -34,16 +38,15 @@ public class Controller {
         return userService.login(user);
     }
 
-    @PostMapping("usercharacters")
-    public List<Character> getUserCharacterList(@RequestBody User user) {
-        return userService.getCharacterList(user);
+    @GetMapping("usercharacters/{id}")
+    public List<Character> getUserCharacterList(@PathVariable int id) {
+        return userService.getCharacterList(id);
     }
 
-    @PostMapping("usereventdetails")
-    public List<EventDetail> getUserEventDetailList(@RequestBody User user) {
-        return userService.getEventDetailList(user);
+    @GetMapping("usereventdetails/{id}")
+    public List<EventDetail> getUserEventDetailList(@PathVariable int id) {
+        return userService.getEventDetailList(id);
     }
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // User methods

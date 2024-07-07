@@ -4,25 +4,29 @@ package com.raidtool.signup.Entities;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name="events")
+@Table(name = "events")
 public class Event {
 
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name="title")
+    @Column(name = "title")
     private String title;
 
-    @Column(name="description")
+    @Column(name = "description")
     private String description;
 
-    @Column(name="enddate")
+    @Column(name = "enddate")
     private Date endDate;
 
+    @OneToMany
+    @JoinColumn(name = "event_id")
+    private List<EventDetail> eventDetailList;
 
     public Event(int id, String title, String description, Date endDate) {
         this.id = id;
@@ -31,7 +35,8 @@ public class Event {
         this.endDate = endDate;
     }
 
-    public Event() {}
+    public Event() {
+    }
 
     public int getId() {
         return id;
@@ -63,5 +68,13 @@ public class Event {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public List<EventDetail> getEventDetailList() {
+        return eventDetailList;
+    }
+
+    public void setEventDetailList(List<EventDetail> eventDetailList) {
+        this.eventDetailList = eventDetailList;
     }
 }

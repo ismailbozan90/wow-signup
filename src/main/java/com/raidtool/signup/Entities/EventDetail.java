@@ -4,25 +4,25 @@ package com.raidtool.signup.Entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="eventdetails")
+@Table(name = "eventdetails")
 public class EventDetail {
 
 
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name="event_id")
+    @Column(name = "event_id")
     private int eventId;
 
-    @Column(name="character")
+    @Column(name = "character")
     private String characterName;
 
-    @Column(name="status")
+    @Column(name = "status")
     private int status;
 
-    @Column(name="user_id")
+    @Column(name = "user_id")
     private int userId;
 
 
@@ -34,7 +34,8 @@ public class EventDetail {
         this.userId = userId;
     }
 
-    public EventDetail() {}
+    public EventDetail() {
+    }
 
     public int getId() {
         return id;
