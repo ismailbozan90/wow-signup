@@ -11,10 +11,10 @@ public class EventDetail {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(name = "event_id")
-    private int eventId;
+    private long eventId;
 
     @Column(name = "character")
     private String characterName;
@@ -23,10 +23,13 @@ public class EventDetail {
     private int status;
 
     @Column(name = "user_id")
-    private int userId;
+    private long userId;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private Character character;
 
 
-    public EventDetail(int id, int eventId, String characterName, int status, int userId) {
+    public EventDetail(long id, long eventId, String characterName, int status, long userId) {
         this.id = id;
         this.eventId = eventId;
         this.characterName = characterName;
@@ -37,19 +40,19 @@ public class EventDetail {
     public EventDetail() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getEventId() {
+    public long getEventId() {
         return eventId;
     }
 
-    public void setEventId(int eventId) {
+    public void setEventId(long eventId) {
         this.eventId = eventId;
     }
 
@@ -69,11 +72,19 @@ public class EventDetail {
         this.status = status;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int id) {
+    public void setUserId(long id) {
         this.userId = id;
+    }
+
+    public Character getCharacter() {
+        return character;
+    }
+
+    public void setCharacter(Character character) {
+        this.character = character;
     }
 }

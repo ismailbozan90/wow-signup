@@ -6,7 +6,7 @@ public interface IService<T> {
 
     List<T> get();
 
-    T getById(int id);
+    T getById(long id);
 
     void add(T t);
 

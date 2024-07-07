@@ -25,7 +25,7 @@ public class UserService implements IService<User> {
     }
 
     @Override
-    public User getById(int id) {
+    public User getById(long id) {
         return userRepository.getById(id);
     }
 
@@ -48,11 +48,11 @@ public class UserService implements IService<User> {
         return userRepository.login(user);
     }
 
-    public List<Character> getCharacterList(int id) {
+    public List<Character> getCharacterList(long id) {
         return userRepository.getCharacterList(id);
     }
 
-    public List<EventDetail> getEventDetailList(int id) {
+    public List<EventDetail> getEventDetailList(long id) {
         return userRepository.getEventDetailList(id);
     }
 }

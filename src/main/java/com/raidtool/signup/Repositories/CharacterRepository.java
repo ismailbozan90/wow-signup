@@ -27,7 +27,7 @@ public class CharacterRepository implements IRepository<Character> {
     }
 
     @Override
-    public Character getById(int id) {
+    public Character getById(long id) {
         Session session = entityManager.unwrap(Session.class);
         return session.get(Character.class, id);
     }

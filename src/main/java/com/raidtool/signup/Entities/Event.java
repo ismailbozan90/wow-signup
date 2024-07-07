@@ -13,7 +13,7 @@ public class Event {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(name = "title")
     private String title;
@@ -28,7 +28,7 @@ public class Event {
     @JoinColumn(name = "event_id")
     private List<EventDetail> eventDetailList;
 
-    public Event(int id, String title, String description, Date endDate) {
+    public Event(long id, String title, String description, Date endDate) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -38,11 +38,11 @@ public class Event {
     public Event() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

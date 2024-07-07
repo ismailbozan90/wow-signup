@@ -23,7 +23,7 @@ public class EventService implements IService<Event> {
     }
 
     @Override
-    public Event getById(int id) {
+    public Event getById(long id) {
         return eventRepository.getById(id);
     }
 

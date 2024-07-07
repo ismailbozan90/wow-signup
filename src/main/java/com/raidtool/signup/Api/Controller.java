@@ -39,12 +39,12 @@ public class Controller {
     }
 
     @GetMapping("usercharacters/{id}")
-    public List<Character> getUserCharacterList(@PathVariable int id) {
+    public List<Character> getUserCharacterList(@PathVariable long id) {
         return userService.getCharacterList(id);
     }
 
     @GetMapping("usereventdetails/{id}")
-    public List<EventDetail> getUserEventDetailList(@PathVariable int id) {
+    public List<EventDetail> getUserEventDetailList(@PathVariable long id) {
         return userService.getEventDetailList(id);
     }
 
@@ -56,7 +56,7 @@ public class Controller {
     }
 
     @GetMapping("user/{id}")
-    public User getUser(@PathVariable int id) {
+    public User getUser(@PathVariable long id) {
         return userService.getById(id);
     }
 
@@ -83,7 +83,7 @@ public class Controller {
     }
 
     @GetMapping("character/{id}")
-    public Character getCharacter(@PathVariable int id) {
+    public Character getCharacter(@PathVariable long id) {
         return characterService.getById(id);
     }
 
@@ -110,7 +110,7 @@ public class Controller {
     }
 
     @GetMapping("event/{id}")
-    public Event getEvent(@PathVariable int id) {
+    public Event getEvent(@PathVariable long id) {
         return eventService.getById(id);
     }
 
@@ -137,7 +137,7 @@ public class Controller {
     }
 
     @GetMapping("eventdetail/{id}")
-    public EventDetail getEventDetail(@PathVariable int id) {
+    public EventDetail getEventDetail(@PathVariable long id) {
         return eventDetailService.getById(id);
     }
 

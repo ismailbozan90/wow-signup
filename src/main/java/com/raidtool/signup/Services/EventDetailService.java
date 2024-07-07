@@ -23,7 +23,7 @@ public class EventDetailService implements IService<EventDetail> {
     }
 
     @Override
-    public EventDetail getById(int id) {
+    public EventDetail getById(long id) {
         return eventDetailRepository.getById(id);
     }
 

@@ -30,7 +30,7 @@ public class UserRepository implements IRepository<User> {
     }
 
     @Override
-    public User getById(int id) {
+    public User getById(long id) {
         Session session = entityManager.unwrap(Session.class);
         return session.get(User.class, id);
     }
@@ -64,13 +64,13 @@ public class UserRepository implements IRepository<User> {
         return !result.isEmpty();
     }
 
-    public List<Character> getCharacterList(int id) {
+    public List<Character> getCharacterList(long id) {
         Session session = entityManager.unwrap(Session.class);
         User findUser = session.get(User.class, id);
         return findUser.getCharacterList();
     }
 
-    public List<EventDetail> getEventDetailList(int id) {
+    public List<EventDetail> getEventDetailList(long id) {
         Session session = entityManager.unwrap(Session.class);
         User findUser = session.get(User.class, id);
         return findUser.getEventDetailList();

@@ -23,7 +23,7 @@ public class CharacterService implements IService<Character> {
     }
 
     @Override
-    public Character getById(int id) {
+    public Character getById(long id) {
         return characterRepository.getById(id);
     }
 

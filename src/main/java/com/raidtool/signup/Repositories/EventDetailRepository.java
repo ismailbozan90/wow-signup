@@ -27,7 +27,7 @@ public class EventDetailRepository implements IRepository<EventDetail> {
     }
 
     @Override
-    public EventDetail getById(int id) {
+    public EventDetail getById(long id) {
         Session session = entityManager.unwrap(Session.class);
         return session.get(EventDetail.class, id);
     }
