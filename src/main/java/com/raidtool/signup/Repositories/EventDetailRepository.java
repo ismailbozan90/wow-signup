@@ -23,7 +23,7 @@ public class EventDetailRepository implements IRepository<EventDetail> {
     @Override
     public List<EventDetail> get() {
         Session session = entityManager.unwrap(Session.class);
-        return session.createQuery("from EventDetail").getResultList();
+        return session.createQuery("from EventDetail e ORDER BY e.eventId").getResultList();
     }
 
     @Override

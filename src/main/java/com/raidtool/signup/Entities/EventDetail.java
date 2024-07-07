@@ -3,10 +3,11 @@ package com.raidtool.signup.Entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "eventdetails")
 public class EventDetail {
-
 
     @Id
     @Column(name = "id")
@@ -16,8 +17,8 @@ public class EventDetail {
     @Column(name = "event_id")
     private long eventId;
 
-    @Column(name = "character")
-    private String characterName;
+    @Column(name = "character_id")
+    private long characterId;
 
     @Column(name = "status")
     private int status;
@@ -25,19 +26,30 @@ public class EventDetail {
     @Column(name = "user_id")
     private long userId;
 
+    @Column(name = "spec")
+    private int spec;
+
     @OneToMany(fetch = FetchType.LAZY)
-    private Character character;
+    @JoinColumn(name = "id", referencedColumnName = "character_id")
+    private List<Character> character;
 
-
-    public EventDetail(long id, long eventId, String characterName, int status, long userId) {
+    public EventDetail(long id, long eventId, long characterId, int status, long userId) {
         this.id = id;
         this.eventId = eventId;
-        this.characterName = characterName;
+        this.characterId = characterId;
         this.status = status;
         this.userId = userId;
     }
 
     public EventDetail() {
+    }
+
+    public void setCharacter(List<Character> character) {
+        this.character = character;
+    }
+
+    public List<Character> getCharacter() {
+        return character;
     }
 
     public long getId() {
@@ -56,12 +68,12 @@ public class EventDetail {
         this.eventId = eventId;
     }
 
-    public String getCharacterName() {
-        return characterName;
+    public long getCharacterId() {
+        return characterId;
     }
 
-    public void setCharacterName(String characterName) {
-        this.characterName = characterName;
+    public void setCharacterId(long characterId) {
+        this.characterId = characterId;
     }
 
     public int getStatus() {
@@ -80,11 +92,11 @@ public class EventDetail {
         this.userId = id;
     }
 
-    public Character getCharacter() {
-        return character;
+    public int getSpec() {
+        return spec;
     }
 
-    public void setCharacter(Character character) {
-        this.character = character;
+    public void setSpec(int spec) {
+        this.spec = spec;
     }
 }
