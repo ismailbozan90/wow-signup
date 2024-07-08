@@ -41,6 +41,12 @@ public class EventDetailRepository implements IRepository<EventDetail> {
     @Override
     public void update(EventDetail eventDetail) {
         Session session = entityManager.unwrap(Session.class);
+
+        EventDetail eventOrigin = session.get(EventDetail.class, eventDetail.getId());
+        if (eventOrigin.getSpec() != eventDetail.getSpec() && eventDetail.getStatus() < 3) {
+            eventDetail.setStatus(eventDetail.getSpec());
+        }
+
         session.saveOrUpdate(eventDetail);
     }
 
