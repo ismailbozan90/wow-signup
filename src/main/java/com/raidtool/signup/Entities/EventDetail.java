@@ -2,29 +2,35 @@ package com.raidtool.signup.Entities;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
-@Table(name = "eventdetails")
+@Table(name = "event_details")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class EventDetail {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "event_id")
-    private long eventId;
+    private Long eventId;
 
     @Column(name = "character_id")
-    private long characterId;
+    private Long characterId;
 
     @Column(name = "status")
     private int status;
 
     @Column(name = "user_id")
-    private long userId;
+    private Long userId;
 
     @Column(name = "spec")
     private int spec;
@@ -33,70 +39,4 @@ public class EventDetail {
     @JoinColumn(name = "id", referencedColumnName = "character_id")
     private List<Character> character;
 
-    public EventDetail(long id, long eventId, long characterId, int status, long userId) {
-        this.id = id;
-        this.eventId = eventId;
-        this.characterId = characterId;
-        this.status = status;
-        this.userId = userId;
-    }
-
-    public EventDetail() {
-    }
-
-    public void setCharacter(List<Character> character) {
-        this.character = character;
-    }
-
-    public List<Character> getCharacter() {
-        return character;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(long eventId) {
-        this.eventId = eventId;
-    }
-
-    public long getCharacterId() {
-        return characterId;
-    }
-
-    public void setCharacterId(long characterId) {
-        this.characterId = characterId;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long id) {
-        this.userId = id;
-    }
-
-    public int getSpec() {
-        return spec;
-    }
-
-    public void setSpec(int spec) {
-        this.spec = spec;
-    }
 }

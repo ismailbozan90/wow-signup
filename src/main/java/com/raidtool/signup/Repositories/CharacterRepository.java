@@ -11,43 +11,56 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class CharacterRepository implements IRepository<Character> {
+public class CharacterRepository {
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Autowired
     public CharacterRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
-    @Override
-    public List<Character> get() {
+    public List<Character> getCharacters() {
         Session session = entityManager.unwrap(Session.class);
-        return session.createQuery("from Character").getResultList();
+        return session.createQuery("from Character", Character.class).getResultList();
     }
 
-    @Override
-    public Character getById(long id) {
+    public Character getById(Long id) {
         Session session = entityManager.unwrap(Session.class);
         return session.get(Character.class, id);
     }
 
-    @Override
-    public void add(Character character) {
+    public Boolean addCharacter(Character character) {
         Session session = entityManager.unwrap(Session.class);
-        session.saveOrUpdate(character);
+        try {
+            session.persist(character);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error add character : " + e.getMessage());
+            return false;
+        }
     }
 
-    @Override
-    public void update(Character character) {
+    public Boolean updateCharacter(Character character) {
         Session session = entityManager.unwrap(Session.class);
-        session.saveOrUpdate(character);
+        try {
+            session.merge(character);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error update character : " + e.getMessage());
+            return false;
+        }
     }
 
-    @Override
-    public void delete(Character character) {
+    public Boolean deleteCharacter(Long id) {
         Session session = entityManager.unwrap(Session.class);
-        Character characterToDelete = session.get(Character.class, character.getId());
-        session.delete(characterToDelete);
+        try {
+            Character characterToDelete = session.get(Character.class, id);
+            session.remove(characterToDelete);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error delete character : " + e.getMessage());
+            return false;
+        }
     }
 }

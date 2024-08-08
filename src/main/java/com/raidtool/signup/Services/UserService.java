@@ -1,58 +1,67 @@
 package com.raidtool.signup.Services;
 
+import com.raidtool.signup.DTO.CharacterDTO;
+import com.raidtool.signup.DTO.EventDetailDTO;
+import com.raidtool.signup.DTO.UserDTO;
 import com.raidtool.signup.Entities.Character;
 import com.raidtool.signup.Entities.EventDetail;
 import com.raidtool.signup.Entities.User;
 import com.raidtool.signup.Repositories.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class UserService implements IService<User> {
+public class UserService {
 
-    UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
+        this.modelMapper = modelMapper;
     }
 
-    @Override
-    public List<User> get() {
-        return userRepository.get();
+    public List<UserDTO> getUsers() {
+        List<User> userList = userRepository.getUsers();
+        return userList.stream().map(user -> modelMapper.map(user, UserDTO.class)).toList();
     }
 
-    @Override
-    public User getById(long id) {
-        return userRepository.getById(id);
+    public Optional<UserDTO> getById(Long id) {
+        User user = userRepository.getById(id);
+        if (user == null) {
+            return Optional.empty();
+        }
+        return Optional.of(modelMapper.map(user, UserDTO.class));
     }
 
-    @Override
-    public void add(User user) {
-        userRepository.add(user);
+    public Boolean addUser(User user) {
+        return userRepository.addUser(user);
     }
 
-    @Override
-    public void update(User user) {
-        userRepository.update(user);
+    public Boolean updateUser(User user) {
+        return userRepository.updateUser(user);
     }
 
-    @Override
-    public void delete(User user) {
-        userRepository.delete(user);
+    public Boolean deleteUser(Long id) {
+        return userRepository.deleteUser(id);
     }
 
-    public boolean login(User user) {
+    public Boolean login(User user) {
         return userRepository.login(user);
     }
 
-    public List<Character> getCharacterList(long id) {
-        return userRepository.getCharacterList(id);
+    public List<CharacterDTO> getCharacterList(Long id) {
+        List<Character> characterList = userRepository.getCharacterList(id);
+        return characterList.stream().map(character -> modelMapper.map(character, CharacterDTO.class)).toList();
     }
 
-    public List<EventDetail> getEventDetailList(long id) {
-        return userRepository.getEventDetailList(id);
+    public List<EventDetailDTO> getEventDetailList(Long id) {
+        List<EventDetail> eventDetailList = userRepository.getEventDetailList(id);
+        return eventDetailList.stream().map(eventDetail -> modelMapper.map(eventDetail, EventDetailDTO.class)).toList();
     }
 }

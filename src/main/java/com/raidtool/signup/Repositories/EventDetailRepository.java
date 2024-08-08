@@ -11,49 +11,63 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class EventDetailRepository implements IRepository<EventDetail> {
+public class EventDetailRepository {
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Autowired
     public EventDetailRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
-    @Override
-    public List<EventDetail> get() {
+    public List<EventDetail> getEventDetails() {
         Session session = entityManager.unwrap(Session.class);
-        return session.createQuery("from EventDetail e ORDER BY e.eventId").getResultList();
+        return session.createQuery("from EventDetail e ORDER BY e.eventId", EventDetail.class).getResultList();
     }
 
-    @Override
-    public EventDetail getById(long id) {
+    public EventDetail getById(Long id) {
         Session session = entityManager.unwrap(Session.class);
         return session.get(EventDetail.class, id);
     }
 
-    @Override
-    public void add(EventDetail eventDetail) {
+    public Boolean addEventDetail(EventDetail eventDetail) {
         Session session = entityManager.unwrap(Session.class);
-        session.saveOrUpdate(eventDetail);
-    }
-
-    @Override
-    public void update(EventDetail eventDetail) {
-        Session session = entityManager.unwrap(Session.class);
-
-        EventDetail eventOrigin = session.get(EventDetail.class, eventDetail.getId());
-        if (eventOrigin.getSpec() != eventDetail.getSpec() && eventDetail.getStatus() < 3) {
-            eventDetail.setStatus(eventDetail.getSpec());
+        try {
+            session.persist(eventDetail);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error add eventdetail " + e.getMessage());
+            return false;
         }
 
-        session.saveOrUpdate(eventDetail);
     }
 
-    @Override
-    public void delete(EventDetail eventDetail) {
+    public Boolean updateEventDetail(EventDetail eventDetail) {
         Session session = entityManager.unwrap(Session.class);
-        EventDetail eventDetailToDelete = session.get(EventDetail.class, eventDetail.getId());
-        session.delete(eventDetailToDelete);
+        try {
+            EventDetail eventOrigin = session.get(EventDetail.class, eventDetail.getId());
+            if (eventOrigin.getSpec() != eventDetail.getSpec() && eventDetail.getStatus() < 3) {
+                eventDetail.setStatus(eventDetail.getSpec());
+            }
+            session.merge(eventDetail);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error update event_detail " + e.getMessage());
+            return false;
+        }
+
+    }
+
+    public Boolean deleteEventDetail(Long id) {
+        Session session = entityManager.unwrap(Session.class);
+        try {
+            EventDetail eventDetailToDelete = session.get(EventDetail.class, id);
+            session.remove(eventDetailToDelete);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error delete event_detail " + e.getMessage());
+            return false;
+        }
+
     }
 }

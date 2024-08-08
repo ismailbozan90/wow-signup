@@ -2,20 +2,26 @@ package com.raidtool.signup.Entities;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Table(name = "users")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @Column(name = "username")
+    @Column(name = "user_name")
     private String username;
 
     @Column(name = "password")
@@ -29,52 +35,5 @@ public class User {
     @JoinColumn(name = "user_id")
     private List<EventDetail> eventDetailList;
 
-    public User(long id, String username, String password) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-    }
 
-    public User() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public List<Character> getCharacterList() {
-        return characterList;
-    }
-
-    public void setCharacterList(List<Character> characterList) {
-        this.characterList = characterList;
-    }
-
-    public List<EventDetail> getEventDetailList() {
-        return eventDetailList;
-    }
-
-    public void setEventDetailList(List<EventDetail> eventDetailList) {
-        this.eventDetailList = eventDetailList;
-    }
 }

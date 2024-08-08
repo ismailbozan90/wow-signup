@@ -4,7 +4,6 @@ import com.raidtool.signup.Entities.Character;
 import com.raidtool.signup.Entities.EventDetail;
 import com.raidtool.signup.Entities.User;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,63 +13,85 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class UserRepository implements IRepository<User> {
+public class UserRepository {
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Autowired
     public UserRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
-    @Override
-    public List<User> get() {
+    public List<User> getUsers() {
         Session session = entityManager.unwrap(Session.class);
-        return session.createQuery("from User").getResultList();
+        return session.createQuery("from User", User.class).getResultList();
     }
 
-    @Override
-    public User getById(long id) {
+    public User getById(Long id) {
         Session session = entityManager.unwrap(Session.class);
         return session.get(User.class, id);
     }
 
-    @Override
-    public void add(User user) {
+    public Boolean addUser(User user) {
         Session session = entityManager.unwrap(Session.class);
-        session.saveOrUpdate(user);
+
+        try {
+            String sql = "INSERT INTO users (user_name, password) VALUES (:username, SHA2(:password, 256))";
+            session.createNativeQuery(sql, User.class)
+                    .setParameter("username", user.getUsername())
+                    .setParameter("password", user.getPassword())
+                    .executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error add user : " + e.getMessage());
+            return false;
+        }
     }
 
-    @Override
-    public void update(User user) {
+    public Boolean updateUser(User user) {
         Session session = entityManager.unwrap(Session.class);
-        session.saveOrUpdate(user);
+        try {
+            String sql = "UPDATE users SET user_name=:username, password = SHA2(:password, 256) WHERE id=:id";
+            session.createNativeQuery(sql, User.class)
+                    .setParameter("username", user.getUsername())
+                    .setParameter("password", user.getUsername())
+                    .setParameter("id", user.getId())
+                    .executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error update user : " + e.getMessage());
+            return false;
+        }
     }
 
-    @Override
-    public void delete(User user) {
+    public Boolean deleteUser(Long id) {
         Session session = entityManager.unwrap(Session.class);
-        User userToDelete = session.get(User.class, user.getId());
-        session.delete(userToDelete);
+        try {
+            User userToDelete = session.get(User.class, id);
+            session.remove(userToDelete);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error delete user : " + e.getMessage());
+            return false;
+        }
     }
 
-    public boolean login(User user) {
+    public Boolean login(User user) {
         Session session = entityManager.unwrap(Session.class);
-        String hql = "FROM User u WHERE u.username = :username AND u.password = :password";
-        Query query = session.createQuery(hql);
-        query.setParameter("username", user.getUsername());
-        query.setParameter("password", user.getPassword());
-        List<User> result = query.getResultList();
-        return !result.isEmpty();
+        String sql = "SELECT * FROM users WHERE user_name = :username AND password = SHA2(:password, 256)";
+        return !session.createNativeQuery(sql, User.class)
+                .setParameter("username", user.getUsername())
+                .setParameter("password", user.getPassword())
+                .getResultList().isEmpty();
     }
 
-    public List<Character> getCharacterList(long id) {
+    public List<Character> getCharacterList(Long id) {
         Session session = entityManager.unwrap(Session.class);
         User findUser = session.get(User.class, id);
         return findUser.getCharacterList();
     }
 
-    public List<EventDetail> getEventDetailList(long id) {
+    public List<EventDetail> getEventDetailList(Long id) {
         Session session = entityManager.unwrap(Session.class);
         User findUser = session.get(User.class, id);
         return findUser.getEventDetailList();

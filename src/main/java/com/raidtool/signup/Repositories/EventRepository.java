@@ -11,43 +11,57 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class EventRepository implements IRepository<Event> {
+public class EventRepository  {
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Autowired
     public EventRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
-    @Override
-    public List<Event> get() {
+    public List<Event> getEvents() {
         Session session = entityManager.unwrap(Session.class);
-        return session.createQuery("from Event").getResultList();
+        return session.createQuery("from Event", Event.class).getResultList();
     }
 
-    @Override
-    public Event getById(long id) {
+    public Event getById(Long id) {
         Session session = entityManager.unwrap(Session.class);
         return session.get(Event.class, id);
     }
 
-    @Override
-    public void add(Event event) {
+    public Boolean addEvent(Event event) {
         Session session = entityManager.unwrap(Session.class);
-        session.saveOrUpdate(event);
+        try {
+            session.persist(event);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error add event : " + e.getMessage());
+            return false;
+        }
+
     }
 
-    @Override
-    public void update(Event event) {
+    public Boolean updateEvent(Event event) {
         Session session = entityManager.unwrap(Session.class);
-        session.saveOrUpdate(event);
+        try {
+            session.merge(event);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error update event : " + e.getMessage());
+            return false;
+        }
     }
 
-    @Override
-    public void delete(Event event) {
+    public Boolean deleteEvent(Long id) {
         Session session = entityManager.unwrap(Session.class);
-        Event eventToDelete = session.get(Event.class, event.getId());
-        session.delete(eventToDelete);
+        try {
+            Event eventToDelete = session.get(Event.class, id);
+            session.remove(eventToDelete);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error delete event : " + e.getMessage());
+            return false;
+        }
     }
 }
